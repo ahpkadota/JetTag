@@ -6,9 +6,9 @@ $(document).ready(
                     let titles = data.map(x=>x.children.map(y=>y.text)).flat();
                     let idx = [];
                     for (let i=0;i<titles.length;i++) {
-                        var replace = titles[i];
+                        var replace = ","+titles[i].replace(/[()&]/g, "")+";";
                         var re = new RegExp(replace,"g");
-                        if ((response.farewell.match(re) || []).length == 1) {
+                        if ((response.farewell.replace(/[()&]/g, "").match(re) || []).length == 1) {
                             idx.push(i)
                         }
                     }
