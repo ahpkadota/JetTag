@@ -15,18 +15,16 @@
   </nav>
 <body>
     
-<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2000">
-    <div class="toast-body">
-      Tags copied to clipboard!
-    </div>
+<div class="position-fixed top-0  start-50 translate-middle-x" style="z-index: 11;">
+  <div id="liveToast" class="toast" style="width: auto" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2000">
+    <div class="toast-body"></div>
   </div>
 </div>
 
     <div class="card-body">
         <h6 class="card-subtitle mb-2">Select policy tags</h6>
         <div class="input-group">
-            <select class="form-control" id="multipleSelectExample" data-placeholder="Select a policy title" multiple="" aria-describedby="basic-addon2"></select>
+            <select class="form-control js-example-placeholder-multiple" data-multiple="true" multiple="true" id="multipleSelectExample" aria-describedby="basic-addon2" data-placeholder="Select a policy title"></select>
             <span class="input-group-text" id="basic-addon2" style="padding: 0rem 1.5rem;">
                 <img id="press" src="\images\files.svg" class="press"></img>
             </span>
@@ -48,11 +46,36 @@
             <div>
                 <input id="input" class="form-control" placeholder="Load options"></input>
                 <br>
-                <button id="save" type="button" class="btn btn-success">Save</button>
-                <button id="clear" type="button" class="btn btn-danger">Clear cache</button>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-auto me-auto">
+                      <button id="save" type="button" class="btn btn-outline-success">Save</button>
+                      <button id="clear" type="button" class="btn btn-outline-danger">Clear cache</button></div>
+                    <div class="col-auto">
+                      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">About</button>    
+                    </div>
+                  </div>
+                </div>
             </div>
         </div>
       </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">About</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <a>JetTag 1.0.0</a><br>
+        <a>Created by Akiro Kadota</a><br>
+        <a href="https://github.com/ahpkadota/JetTag">https://github.com/ahpkadota/JetTag</a><br>
+        <a href="https://bytedance.feishu.cn/docx/doxcnkEwIe1yipqucf6rtMwHpRf">Manual</a>
+      </div>
+    </div>
+  </div>
+</div>
     </body>
 </body>
 </html>
