@@ -19,7 +19,7 @@ $(document).ready(
                 }
                 $('#multipleSelectExample').val(idx);
                 const sel = $('#multipleSelectExample').select2('data');
-                $('#preview').val(sel.map(x => x.fullText).join("\r\n"));
+                $('#preview').val(sel.map(x => x.fullText).join("\r\n")+ "\nREASON: ");
                 $('#multipleSelectExample').trigger('change');
             });
         });
