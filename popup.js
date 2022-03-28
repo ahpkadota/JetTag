@@ -26,10 +26,51 @@ $(document).ready(
                 }
                 $('#multipleSelectExample').val(idx.filter(item => idx.lastIndexOf(item) == idx.indexOf(item)));
                 const sel = $('#multipleSelectExample').select2('data');
-                $('#preview').val(sel.map(x => x.ft).join("\r\n")+ "\nREASON: \nHello, . Thank you.");
+                $('#preview').val(sel.map(x => x.ft).join("\r\n")+ "\nREASON: \n");
                 $('#multipleSelectExample').trigger('change');
             });
         });
+
+
+        chrome.storage.local.get(['lol'], function(result) {
+            let s = document.getElementsByClassName("input-button");
+            let t = document.getElementsByClassName("input-text");
+            let u = document.getElementsByClassName("button-shortcut");
+            for (let i=0;i<s.length;i++) {
+                s[i].value = result.lol[i][0];
+                t[i].value = result.lol[i][1];
+                if (result.lol[i][1] != "") {
+                    if (result.lol[i][0] != "") {
+                        u[i].innerHTML = result.lol[i][0];
+                        u[i].title = result.lol[i][1]
+                    }
+                    u[i].addEventListener("click", function() {
+                        document.getElementById("preview").value = result.lol[i][1];
+                    })
+                }
+            }
+        });
+
+
+
+
+        document.getElementById("saveShortcuts").addEventListener("click", function() {
+            let s = document.getElementsByClassName("input-button");
+            let t = document.getElementsByClassName("input-text");
+            let u = [];
+            for (let i=0;i<s.length;i++) {
+                u.push([s[i].value, t[i].value])
+            }
+            chrome.storage.local.set({lol: u}, toast("Success!"));
+
+        });
+
+
+
+
+
+
+
         //Prevents dropdown from opening when removing tags
         $('#multipleSelectExample').select2({
             allowClear: true
@@ -71,7 +112,7 @@ $(document).ready(
                 document.getElementById("preview").value = ""
                 $('#multipleSelectExample').on('select2:select select2:unselect', function(e) {
                     const sel = $('#multipleSelectExample').select2('data')
-                    document.getElementById("preview").value = sel.map(x => x.ft).join("\r\n") + "\nREASON: Hello, . Thank you."
+                    document.getElementById("preview").value = sel.map(x => x.ft).join("\r\n") + "\nREASON: \n"
                     if (sel == "") {
                         document.getElementById("preview").value = ""
                     }
@@ -99,7 +140,7 @@ $(document).ready(
         //sets selected tag values to textarea element for preview
         $('#multipleSelectExample').on('select2:select select2:unselect', function(e) {
             const sel = $('#multipleSelectExample').select2('data')
-            document.getElementById("preview").value = sel.map(x => x.ft).join("\r\n") + "\nREASON: Hello, . Thank you."
+            document.getElementById("preview").value = sel.map(x => x.ft).join("\r\n") + "\nREASON: \n"
             if (sel == "") {
                 document.getElementById("preview").value = ""
             }
@@ -129,8 +170,6 @@ let data = [];
 chrome.storage.local.get(['key'], function(result) {
     data = JSON.parse(result.key);
 });
-
-
   
 
 function toast(x) {
