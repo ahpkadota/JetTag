@@ -61,6 +61,8 @@ div[aria-expanded='true'] > .caret {
 }
 textarea {
     resize: none;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
 }
 .select2-container--default .select2-results__group {
     background-color: #535c66;
@@ -80,4 +82,41 @@ textarea {
 }
 #flexCheckDefault{
     margin-left: 50%;
+}
+/* .button-input {
+    max-width: 20%;
+}
+.text-input {
+    max-width: 60%;
+} */
+.list-group-item {
+    max-width: auto;
+} 
+.button-shortcut {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 0.75rem !important;
+    background-color: #e9ecef !important;
+    border-color: #ced4da !important;
+}
+.button-shortcut:hover {
+    cursor:pointer;
+    color: black !important;
+    background-color: #d1d1d1 !important;
+}
+.input-button {
+    width: 100%;
+}
+.input-text {
+    width: 100%;
+}
+.justify-content-start {
+    margin-bottom: 0.25rem;
+}
+.btn-group-vertical {
+    max-width: 20%;
+}
+#configure, #clear, #about {
+    line-height: 1rem !important;
 }
