@@ -28,7 +28,6 @@ $(document).ready(
             });
 
             chrome.storage.local.get(['lol'], function(result) {
-                if (result.lol) {
                     let s = document.getElementsByClassName("input-button");
                     let t = document.getElementsByClassName("input-text");
                     let u = document.getElementsByClassName("button-shortcut");
@@ -48,10 +47,8 @@ $(document).ready(
                             u[i].addEventListener("click", function() {
                                 document.getElementById("preview").value = result.lol[i][1];
                             })
-
                         }
                     }
-                }
             });
 
 
@@ -64,7 +61,7 @@ $(document).ready(
             for (let i=0;i<s.length;i++) {
                 u.push([s[i].value, t[i].value])
             }
-            chrome.storage.local.set({lol: u}, toast("Success!"));
+            chrome.storage.local.set({lol: u}, toast("Success!"+u));
 
         });
 
