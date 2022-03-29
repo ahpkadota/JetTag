@@ -103,96 +103,113 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Shortcut menu</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
          <div class="container">
           <div class="row justify-content-start">
             <div class="col-1">
-              <a>#</a>
+              <a style="font-size:12px">#</a>
             </div>
-            <div class="col-4">
-              <a>Button name</a>
+            <div class="col-3">
+              <a style="font-size:12px">Button name</a>
             </div>
-            <div class="col-7">
-              <a>Text</a>
+            <div class="col-8">
+              <a style="font-size:12px">Text</a>
             </div>
           </div>
       
-        <div class="row justify-content-start">
+          <div class="row justify-content-start">
             <div class="col-1">
               <a>1</a>
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <input class="input-button">
             </div>
             <div class="col-7">
-              <input class="input-text">
+              <textarea class="input-text"></textarea>
+            </div>
+            <div class="col-1">
+              <img src="\images\trash.svg" class="delete"></img>
             </div>
           </div>
           <div class="row justify-content-start">
             <div class="col-1">
               <a>2</a>
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <input class="input-button">
             </div>
             <div class="col-7">
-              <input class="input-text">
+              <textarea class="input-text"></textarea>
+            </div>
+            <div class="col-1">
+              <img src="\images\trash.svg" class="delete"></img>
             </div>
           </div>
           <div class="row justify-content-start">
             <div class="col-1">
               <a>3</a>
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <input class="input-button">
             </div>
             <div class="col-7">
-              <input class="input-text">
+              <textarea class="input-text"></textarea>
+            </div>
+            <div class="col-1">
+              <img src="\images\trash.svg" class="delete"></img>
             </div>
           </div>
           <div class="row justify-content-start">
             <div class="col-1">
               <a>4</a>
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <input class="input-button">
             </div>
             <div class="col-7">
-              <input class="input-text">
+              <textarea class="input-text"></textarea>
+            </div>
+            <div class="col-1">
+              <img src="\images\trash.svg" class="delete"></img>
             </div>
           </div>
           <div class="row justify-content-start">
             <div class="col-1">
               <a>5</a>
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <input class="input-button">
             </div>
             <div class="col-7">
-              <input class="input-text">
+              <textarea class="input-text"></textarea>
+            </div>
+            <div class="col-1">
+              <img src="\images\trash.svg" class="delete"></img>
             </div>
           </div>
           <div class="row justify-content-start">
             <div class="col-1">
               <a>6</a>
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <input class="input-button">
             </div>
             <div class="col-7">
-              <input class="input-text">
+              <textarea class="input-text"></textarea>
+            </div>
+            <div class="col-1">
+              <img src="\images\trash.svg" class="delete"></img>
             </div>
           </div>
-
-
-        </div>
         
       </div>
+      <br>
+      <p style="font-size: 0.8rem;">Note: Go to "chrome://extensions/shortcuts" to bind keyboard shortcuts</p>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="shortcutClose">Close</button>
         <button type="button" class="btn btn-primary" id="saveShortcuts">Save</button>
       </div>
     </div>
