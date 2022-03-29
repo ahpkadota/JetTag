@@ -10,11 +10,7 @@
     },
     "commands": {
         "0": {
-            "suggested_key": {
-                "default": "Ctrl+Shift+P",
-                "mac": "Command+Shift+P"
-            },
-            "description": "Paste default template"
+            "description": "Paste tags automatically"
         },
         "1": {
             "description": "Shortcut1"
