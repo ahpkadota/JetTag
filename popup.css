@@ -15,10 +15,11 @@ body {
 div[aria-expanded='true'] > .caret {
     transform: rotate(90deg);
 }
-.caret {
+.caret, .delete {
     filter: opacity(50%);
+    cursor: pointer;
 }
-.caret:hover {
+.caret:hover, .delete:hover {
     transform: scale(1.1);
 }
 .select2-results__options{
@@ -33,6 +34,7 @@ div[aria-expanded='true'] > .caret {
 }
 #preview {
     font-size: 14px;
+    border-radius: 0.25rem 0rem 0rem 0.25rem !important;
 }
 .input-group-text:hover {
     background-color:#d1d1d1;
@@ -83,12 +85,7 @@ textarea {
 #flexCheckDefault{
     margin-left: 50%;
 }
-/* .button-input {
-    max-width: 20%;
-}
-.text-input {
-    max-width: 60%;
-} */
+
 .list-group-item {
     max-width: auto;
 } 
@@ -99,17 +96,32 @@ textarea {
     font-size: 0.75rem !important;
     background-color: #e9ecef !important;
     border-color: #ced4da !important;
+    border-radius: 0rem 0.25rem 0.25rem 0rem !important;
+    border-left:none !important
 }
 .button-shortcut:hover {
     cursor:pointer;
     color: black !important;
     background-color: #d1d1d1 !important;
 }
+.button-shortcut:focus {
+    box-shadow: none !important;
+}
 .input-button {
     width: 100%;
+    height: 1.8rem;
+    border-color: #ced4da !important;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+
 }
 .input-text {
     width: 100%;
+    height: 1.8rem;
+    overflow: hidden;
+    resize: none;
+    font-size: 14px;
 }
 .justify-content-start {
     margin-bottom: 0.25rem;
@@ -117,6 +129,6 @@ textarea {
 .btn-group-vertical {
     max-width: 20%;
 }
-#configure, #clear, #about {
+#configure, #clear, #about,#shortcutClose,#saveShortcuts {
     line-height: 1rem !important;
 }
