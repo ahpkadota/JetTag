@@ -1,30 +1,30 @@
 $(document).ready(
     function() {
-        //Message sender to/from content.js - get string from website
-        chrome.tabs.query({
-            active: true,
-            currentWindow: true
-        }, function(tabs) {
-            chrome.tabs.sendMessage(tabs[0].id, {
-                greeting: "hello"
-            }, function(response) {
-                let cases = [data[data.length-1]].map(x => x.children.map(y => y.id)).flat();
-                let idx = response.farewell;
-                for (let i = 0; i < cases.length; i++) {
-                    if (response.fair.includes(cases[i])) {
-                        let but = document.getElementById("case");
-                        but.style = "display: block";
-                        but.innerHTML = cases[i];
-                        but.addEventListener("click", function(){$('#preview').val(data[data.length-1].children[i].text + " \nREASON: \n" + data[data.length-1].children[i].ft);})
-                    }
+            chrome.tabs.query({
+                active: true,
+                currentWindow: true
+            }, function(tabs) {
+                if (tabs[0].url.includes("https://rock-va.bytedance.net/appeal_center/workbench")) {                
+                    chrome.tabs.sendMessage(tabs[0].id, {
+                    greeting: "hello"
+                    }, function(response) {
+                        let cases = [data[data.length-1]].map(x => x.children.map(y => y.id)).flat();
+                        let idx = response.farewell;
+                        for (let i = 0; i < cases.length; i++) {
+                            if (response.fair.includes(cases[i])) {
+                                let but = document.getElementById("case");
+                                but.style = "display: block";
+                                but.innerHTML = cases[i];
+                                but.addEventListener("click", function(){$('#preview').val(data[data.length-1].children[i].text + " \nREASON: \n" + data[data.length-1].children[i].ft);})
+                            }
+                        }
+                        $('#multipleSelectExample').val(idx.filter(item => idx.lastIndexOf(item) == idx.indexOf(item)));
+                        const sel = $('#multipleSelectExample').select2('data');
+                        $('#preview').val(sel.map(x => x.ft).join("\r\n")+ "\nREASON: \n");
+                        $('#multipleSelectExample').trigger('change');
+                    });
                 }
-
-                $('#multipleSelectExample').val(idx.filter(item => idx.lastIndexOf(item) == idx.indexOf(item)));
-                const sel = $('#multipleSelectExample').select2('data');
-                $('#preview').val(sel.map(x => x.ft).join("\r\n")+ "\nREASON: \n");
-                $('#multipleSelectExample').trigger('change');
             });
-        });
 
 
         chrome.storage.local.get(['lol'], function(result) {
