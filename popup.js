@@ -61,7 +61,7 @@ $(document).ready(
             for (let i=0;i<s.length;i++) {
                 u.push([s[i].value, t[i].value])
             }
-            chrome.storage.local.set({lol: u}, toast("Success!"+u));
+            chrome.storage.local.set({lol: u});
 
         });
 
