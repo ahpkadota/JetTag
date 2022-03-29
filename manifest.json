@@ -11,8 +11,8 @@
     "commands": {
         "0": {
             "suggested_key": {
-                "default": "Ctrl+Shift+0",
-                "mac": "Command+Shift+0"
+                "default": "Ctrl+Shift+P",
+                "mac": "Command+Shift+P"
             },
             "description": "Paste default template"
         },
@@ -46,7 +46,7 @@
     "content_scripts": [
         {
             "matches":  ["https://rock-va.bytedance.net/appeal_center/workbench*"],
-            "js": ["jquery.min.js", "bootstrap.min.js", "chosen.jquery.min.js", "select2.min.js", "content.js"],
+            "js": ["jquery.min.js", "bootstrap.min.js", "select2.min.js", "content.js"],
             "css": ["select2.min.css", "bootstrap.min.css"]
         }
     ],
