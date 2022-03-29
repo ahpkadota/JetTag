@@ -23,34 +23,36 @@ $(document).ready(
                         $('#preview').val(sel.map(x => x.ft).join("\r\n")+ "\nREASON: \n");
                         $('#multipleSelectExample').trigger('change');
                     });
+                    
                 }
             });
 
+            chrome.storage.local.get(['lol'], function(result) {
+                if (result.lol) {
+                    let s = document.getElementsByClassName("input-button");
+                    let t = document.getElementsByClassName("input-text");
+                    let u = document.getElementsByClassName("button-shortcut");
+                    let v = document.getElementsByClassName("delete");
+                    for (let i=0;i<s.length;i++) {
+                        s[i].value = result.lol[i][0];
+                        t[i].value = result.lol[i][1];
+                        v[i].addEventListener("click", function() {
+                            s[i].value = "";
+                            t[i].value = "";
+                        })
+                        if (result.lol[i][1] != "") {
+                            if (result.lol[i][0] != "") {
+                                u[i].innerHTML = result.lol[i][0];
+                                u[i].title = result.lol[i][1]
+                            }
+                            u[i].addEventListener("click", function() {
+                                document.getElementById("preview").value = result.lol[i][1];
+                            })
 
-        chrome.storage.local.get(['lol'], function(result) {
-            let s = document.getElementsByClassName("input-button");
-            let t = document.getElementsByClassName("input-text");
-            let u = document.getElementsByClassName("button-shortcut");
-            let v = document.getElementsByClassName("delete");
-            for (let i=0;i<s.length;i++) {
-                s[i].value = result.lol[i][0];
-                t[i].value = result.lol[i][1];
-                v[i].addEventListener("click", function() {
-                    s[i].value = "";
-                    t[i].value = "";
-                })
-                if (result.lol[i][1] != "") {
-                    if (result.lol[i][0] != "") {
-                        u[i].innerHTML = result.lol[i][0];
-                        u[i].title = result.lol[i][1]
+                        }
                     }
-                    u[i].addEventListener("click", function() {
-                        document.getElementById("preview").value = result.lol[i][1];
-                    })
-
                 }
-            }
-        });
+            });
 
 
 
@@ -169,7 +171,9 @@ $(document).ready(
 
 let data = [];
 chrome.storage.local.get(['key'], function(result) {
-    data = JSON.parse(result.key);
+    if (result.key) {
+        data = JSON.parse(result.key);
+    }
 });
   
 
