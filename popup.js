@@ -27,39 +27,37 @@ $(document).ready(
                 }
             });
 
+            document.getElementById("version").innerHTML = chrome.runtime.getManifest().name +" "+chrome.runtime.getManifest().version;
+            document.getElementById("author").innerHTML = "Created by "+chrome.runtime.getManifest().author;
+            document.getElementById("homepage").innerHTML = chrome.runtime.getManifest().homepage_url;
+            document.getElementById("homepage").href = chrome.runtime.getManifest().homepage_url;
+
             chrome.storage.local.get(['lol'], function(result) {
-                    let s = document.getElementsByClassName("input-button");
                     let t = document.getElementsByClassName("input-text");
                     let u = document.getElementsByClassName("button-shortcut");
                     let v = document.getElementsByClassName("delete");
-                    for (let i=0;i<s.length;i++) {
-                        s[i].value = result.lol[i][0];
-                        t[i].value = result.lol[i][1];
+                    for (let i=0;i<t.length;i++) {
+                        t[i].value = result.lol[i];
                         v[i].addEventListener("click", function() {
-                            s[i].value = "";
                             t[i].value = "";
                         })
-                        if (result.lol[i][1] != "") {
-                            if (result.lol[i][0] != "") {
-                                u[i].innerHTML = result.lol[i][0];
-                                u[i].title = result.lol[i][1]
+                            if (result.lol[i] != "") {
+                                u[i].title = result.lol[i]
                             }
                             u[i].addEventListener("click", function() {
-                                document.getElementById("preview").value = result.lol[i][1];
+                                document.getElementById("preview").value = result.lol[i];
                             })
                         }
-                    }
             });
 
 
 
 
         document.getElementById("saveShortcuts").addEventListener("click", function() {
-            let s = document.getElementsByClassName("input-button");
             let t = document.getElementsByClassName("input-text");
             let u = [];
-            for (let i=0;i<s.length;i++) {
-                u.push([s[i].value, t[i].value])
+            for (let i=0;i<t.length;i++) {
+                u.push(t[i].value)
             }
             chrome.storage.local.set({lol: u});
 
@@ -156,7 +154,7 @@ $(document).ready(
                 JSON.parse(jsonStr);
                 chrome.storage.local.set({
                     key: jsonStr
-                }, toast("Success!"))
+                }, toast("Success! Close and open extension to display results."))
             } catch (err) {
                 toast("Invalid format! :(")
             }
@@ -165,6 +163,7 @@ $(document).ready(
             chrome.storage.local.clear(toast("Cache cleared!"))
         });
     });
+
 
 let data = [];
 chrome.storage.local.get(['key'], function(result) {
