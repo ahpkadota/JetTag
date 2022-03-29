@@ -8,9 +8,8 @@ $(document).ready(
             chrome.tabs.sendMessage(tabs[0].id, {
                 greeting: "hello"
             }, function(response) {
-                let titles = data.slice(0,data.length-2).map(x => x.children.map(y => y.id)).flat();
                 let cases = [data[data.length-1]].map(x => x.children.map(y => y.id)).flat();
-                let idx = [];
+                let idx = response.farewell;
                 for (let i = 0; i < cases.length; i++) {
                     if (response.fair.includes(cases[i])) {
                         let but = document.getElementById("case");
@@ -19,11 +18,7 @@ $(document).ready(
                         but.addEventListener("click", function(){$('#preview').val(data[data.length-1].children[i].text + " \nREASON: \n" + data[data.length-1].children[i].ft);})
                     }
                 }
-                for (let i = 0; i < response.farewell.length; i++) {
-                    if (titles.includes(response.farewell[i])) {
-                        idx.push(response.farewell[i])
-                    }
-                }
+
                 $('#multipleSelectExample').val(idx.filter(item => idx.lastIndexOf(item) == idx.indexOf(item)));
                 const sel = $('#multipleSelectExample').select2('data');
                 $('#preview').val(sel.map(x => x.ft).join("\r\n")+ "\nREASON: \n");
@@ -36,9 +31,14 @@ $(document).ready(
             let s = document.getElementsByClassName("input-button");
             let t = document.getElementsByClassName("input-text");
             let u = document.getElementsByClassName("button-shortcut");
+            let v = document.getElementsByClassName("delete");
             for (let i=0;i<s.length;i++) {
                 s[i].value = result.lol[i][0];
                 t[i].value = result.lol[i][1];
+                v[i].addEventListener("click", function() {
+                    s[i].value = "";
+                    t[i].value = "";
+                })
                 if (result.lol[i][1] != "") {
                     if (result.lol[i][0] != "") {
                         u[i].innerHTML = result.lol[i][0];
@@ -47,6 +47,7 @@ $(document).ready(
                     u[i].addEventListener("click", function() {
                         document.getElementById("preview").value = result.lol[i][1];
                     })
+
                 }
             }
         });
@@ -178,3 +179,4 @@ function toast(x) {
     document.getElementsByClassName('toast-body')[0].innerHTML = x;
     toast.show();
 }
+
