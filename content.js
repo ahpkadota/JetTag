@@ -26,7 +26,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             let val = document.activeElement.value
             let start = document.activeElement.selectionStart;
             let end = document.activeElement.selectionEnd;
-            let txt = result.lol[request.tabTitle-1][1];
+            let txt = result.lol[request.tabTitle-1];
             document.activeElement.value = val.substr(0,start) + txt + val.substr(end,val.length);
             document.activeElement.setSelectionRange(txt.length+start, txt.length+start)
             document.activeElement.dispatchEvent(new Event('input', {bubbles:true}));
