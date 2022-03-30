@@ -31,7 +31,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             document.activeElement.setSelectionRange(txt.length+start, txt.length+start)
             document.activeElement.dispatchEvent(new Event('input', {bubbles:true}));
         });
-    } else {
+    } else if (request.tabTitle == 0) {
         let a = document.getElementsByClassName("semi-descriptions-key");
         let b = [];
         for (let i=0;i<a.length;i++) {
