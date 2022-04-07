@@ -1,3 +1,5 @@
+let atiVal = ""
+
 $(document).ready(
     function() {
             chrome.tabs.query({
@@ -9,17 +11,69 @@ $(document).ready(
                     greeting: "hello"
                     }, function(response) {
                         let cases = [data[data.length-1]].map(x => x.children.map(y => y.id)).flat();
+                        let texts = [data[data.length-1]].map(x => x.children.map(y => y.text)).flat();
                         let idx = response.farewell;
                         for (let i = 0; i < cases.length; i++) {
                             if (response.fair.includes(cases[i])) {
                                 let but = document.getElementById("case");
                                 but.style = "display: block";
                                 but.innerHTML = cases[i];
-                                but.addEventListener("click", function(){$('#preview').val(data[data.length-1].children[i].text + " \nREASON: \n" + data[data.length-1].children[i].ft);})
+                                but.addEventListener("click", function(){
+                                    let check = document.getElementById("flexCheckDefault");
+                                    check.checked = true;
+                                    let cloneNodes = document.getElementsByClassName("clone");
+                                    for (let i=cloneNodes.length-1;i>=0;i--) {
+                                        cloneNodes[i].remove()
+                                    }
+                                    $('#multipleSelectExample').select2('destroy').empty()
+                                    $('#multipleSelectExample').attr("multiple", false)
+                                    $('#multipleSelectExample').select2({
+                                        data: [data[data.length-1]]
+                                    }).trigger('change')
+                                    document.getElementById("preview").value = atiVal
+                                    $('#multipleSelectExample').on('select2:select select2:unselect', function(e) {
+                                        const sel = $('#multipleSelectExample').select2('data')
+                                        document.getElementById("preview").value = atiVal + sel.map(x => x.text) + "\nREASON: \n" + sel.map(x => x.ft).join("\r\n")
+                                        if (sel == "") {
+                                            document.getElementById("preview").value =  atiVal
+                                        }
+                                    });
+                                    $('#multipleSelectExample').val(cases[i]);
+                                    $('#multipleSelectExample').trigger("change");
+                                    $('#preview').val(data[data.length-1].children[i].text + " \nREASON: \n" + data[data.length-1].children[i].ft);
+                                })
                             }
                         }
                         $('#multipleSelectExample').val(idx.filter(item => idx.lastIndexOf(item) == idx.indexOf(item)));
                         const sel = $('#multipleSelectExample').select2('data');
+                        for (let i=0;i<sel.length;i++) {
+                            let elm = document.getElementById("kftime");
+                            let clone = elm.cloneNode(true)
+                            clone.addEventListener("input", function() {
+                                let clones = document.getElementsByClassName("clone");
+                                let val = "";
+                                for (let k=0;k<sel.length;k++) {
+                                    if (clones[k].children[1].value != "" && clones[k].children[2].value != "") {
+                                        val += sel[k].ft + ",\nSec " + clones[k].children[1].value + " / KF " + clones[k].children[2].value + "\n"
+                                    } else if (clones[k].children[1].value == "" && clones[k].children[2].value != "") {
+                                        val += sel[k].ft + ",\nKF " + clones[k].children[2].value + "\n"
+                                    } else if (clones[k].children[1].value != "" && clones[k].children[2].value == "") {
+                                        val += sel[k].ft + ",\nSec " + clones[k].children[1].value + "\n"
+                                    } else {
+                                        val += sel[k].ft + "\n"
+                                    }
+                                }
+                                document.getElementById("preview").value = val + "REASON: \n"
+                                if (sel == "") {
+                                    document.getElementById("preview").value = ""
+                                }
+                            })
+                            clone.className = "clone"
+                            clone.style.display = "flex"
+                            clone.firstElementChild.innerHTML = sel[i].text
+                            elm.after(clone)
+                        }
+                        
                         $('#preview').val(sel.map(x => x.ft).join("\r\n")+ "\nREASON: \n");
                         $('#multipleSelectExample').trigger('change');
                     });
@@ -85,20 +139,27 @@ $(document).ready(
         $('#multipleSelectExample').select2({
             data: data.slice(0,data.length-1)
         }).trigger('change')
+
+
+
         let check = document.getElementById("flexCheckDefault");
         check.addEventListener("change", function() {
             if (document.getElementById("flexCheckDefault").checked) {
+                let cloneNodes = document.getElementsByClassName("clone");
+                for (let i=cloneNodes.length-1;i>=0;i--) {
+                    cloneNodes[i].remove()
+                }
                 $('#multipleSelectExample').select2('destroy').empty()
                 $('#multipleSelectExample').attr("multiple", false)
                 $('#multipleSelectExample').select2({
                     data: [data[data.length-1]]
                 }).trigger('change')
-                document.getElementById("preview").value = ""
+                document.getElementById("preview").value = atiVal
                 $('#multipleSelectExample').on('select2:select select2:unselect', function(e) {
                     const sel = $('#multipleSelectExample').select2('data')
-                    document.getElementById("preview").value = sel.map(x => x.text) + "\nREASON: \n" + sel.map(x => x.ft).join("\r\n")
+                    document.getElementById("preview").value = atiVal + sel.map(x => x.text) + "\nREASON: \n" + sel.map(x => x.ft).join("\r\n")
                     if (sel == "") {
-                        document.getElementById("preview").value = ""
+                        document.getElementById("preview").value =  atiVal
                     }
                 });
             } else {
@@ -109,12 +170,65 @@ $(document).ready(
                 }).trigger('change')
                 document.getElementById("preview").value = ""
                 $('#multipleSelectExample').on('select2:select select2:unselect', function(e) {
-                    const sel = $('#multipleSelectExample').select2('data')
-                    document.getElementById("preview").value = sel.map(x => x.ft).join("\r\n") + "\nREASON: \n"
+                    const sel = $('#multipleSelectExample').select2('data');
+                    document.getElementById("preview").value =  atiVal + sel.map(x => x.ft).join("\r\n") + "\nREASON: \n"
                     if (sel == "") {
-                        document.getElementById("preview").value = ""
+                        document.getElementById("preview").value = atiVal + ""
                     }
                 });
+            }
+        })
+
+
+        let ati = document.getElementById("ati");
+        ati.addEventListener("change", function() {
+            const sel = $('#multipleSelectExample').select2('data');
+            if (document.getElementById("ati").checked) {
+                atiVal = "APPEAL TEMPLATE ISSUE\n";
+                if (document.getElementById("flexCheckDefault").checked) {
+                    document.getElementById("preview").value = atiVal + sel.map(x => x.text) + "\nREASON: \n" + sel.map(x => x.ft).join("\r\n")
+                } else {
+                    let clones = document.getElementsByClassName("clone");
+                    let val = "";
+                    for (let k=0;k<sel.length;k++) {
+                        if (clones[k].children[1].value != "" && clones[k].children[2].value != "") {
+                            val += sel[k].ft + ",\nSec " + clones[k].children[1].value + " / KF " + clones[k].children[2].value + "\n"
+                        } else if (clones[k].children[1].value == "" && clones[k].children[2].value != "") {
+                            val += sel[k].ft + ",\nKF " + clones[k].children[2].value + "\n"
+                        } else if (clones[k].children[1].value != "" && clones[k].children[2].value == "") {
+                            val += sel[k].ft + ",\nSec " + clones[k].children[1].value + "\n"
+                        } else {
+                            val += sel[k].ft + "\n"
+                        }
+                    }
+                    document.getElementById("preview").value = atiVal + val + "REASON: \n"
+                }
+                if (sel == "") {
+                    document.getElementById("preview").value = atiVal
+                }
+            } else {
+                atiVal = "";
+                if (document.getElementById("flexCheckDefault").checked) {
+                    document.getElementById("preview").value = atiVal + sel.map(x => x.text) + "\nREASON: \n" + sel.map(x => x.ft).join("\r\n")
+                } else {
+                    let clones = document.getElementsByClassName("clone");
+                    let val = "";
+                    for (let k=0;k<sel.length;k++) {
+                        if (clones[k].children[1].value != "" && clones[k].children[2].value != "") {
+                            val += sel[k].ft + ",\nSec " + clones[k].children[1].value + " / KF " + clones[k].children[2].value + "\n"
+                        } else if (clones[k].children[1].value == "" && clones[k].children[2].value != "") {
+                            val += sel[k].ft + ",\nKF " + clones[k].children[2].value + "\n"
+                        } else if (clones[k].children[1].value != "" && clones[k].children[2].value == "") {
+                            val += sel[k].ft + ",\nSec " + clones[k].children[1].value + "\n"
+                        } else {
+                            val += sel[k].ft + "\n"
+                        }
+                    }
+                    document.getElementById("preview").value = atiVal + val + "REASON: \n"
+                }
+                if (sel == "") {
+                    document.getElementById("preview").value = atiVal
+                }
             }
         })
         
@@ -137,10 +251,44 @@ $(document).ready(
 
         //sets selected tag values to textarea element for preview
         $('#multipleSelectExample').on('select2:select select2:unselect', function(e) {
-            const sel = $('#multipleSelectExample').select2('data')
-            document.getElementById("preview").value = sel.map(x => x.ft).join("\r\n") + "\nREASON: \n"
+            const sel = $('#multipleSelectExample').select2('data');
+            let check = document.getElementById("flexCheckDefault");
+            if (check.checked == false) {
+                let cloneNodes = document.getElementsByClassName("clone");
+                for (let i=cloneNodes.length-1;i>=0;i--) {
+                    cloneNodes[i].remove()
+                }
+                for (let j=0;j<sel.length;j++) {
+                    let elm = document.getElementById("kftime");
+                    let clone = elm.cloneNode(true);
+                    clone.addEventListener("input", function() {
+                        let clones = document.getElementsByClassName("clone");
+                        let val = "";
+                        for (let k=0;k<sel.length;k++) {
+                            if (clones[k].children[1].value != "" && clones[k].children[2].value != "") {
+                                val += sel[k].ft + ",\nSec " + clones[k].children[1].value + " / KF " + clones[k].children[2].value + "\n"
+                            } else if (clones[k].children[1].value == "" && clones[k].children[2].value != "") {
+                                val += sel[k].ft + ",\nKF " + clones[k].children[2].value + "\n"
+                            } else if (clones[k].children[1].value != "" && clones[k].children[2].value == "") {
+                                val += sel[k].ft + ",\nSec " + clones[k].children[1].value + "\n"
+                            } else {
+                                val += sel[k].ft + "\n"
+                            }
+                        }
+                        document.getElementById("preview").value = atiVal + val + "REASON: \n"
+                        if (sel == "") {
+                            document.getElementById("preview").value = atiVal + ""
+                        }
+                    })
+                    clone.className = "clone"
+                    clone.style.display = "flex"
+                    clone.firstElementChild.innerHTML = sel[j].text
+                    elm.after(clone)
+                }
+            }
+            document.getElementById("preview").value = atiVal + sel.map(x => x.ft).join("\r\n") + "\nREASON: \n"
             if (sel == "") {
-                document.getElementById("preview").value = ""
+                document.getElementById("preview").value = atiVal + ""
             }
         });
 
