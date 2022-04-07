@@ -83,10 +83,9 @@ textarea {
 #selectText{
     display:inline-block
 }
-#flexCheckDefault{
-    margin-left: 50%;
+#ati {
+    margin-left: 10%;
 }
-
 .list-group-item {
     max-width: auto;
 } 
@@ -132,4 +131,17 @@ textarea {
 }
 #configure, #clear, #about,#shortcutClose,#saveShortcuts {
     line-height: 1rem !important;
+}
+
+.kftime-text {
+    width: 70%;
+    font-size: 0.8rem !important;
+    padding: 0rem 0.75rem !important
+}
+.kftime {
+    width: 15%;
+    font-size: 0.7rem;
+}
+.clone {
+    padding: 0.5rem 0rem 0rem 0rem;
 }
