@@ -3,7 +3,7 @@
     "author": "Akiro Kadota",
     "homepage_url": "https://github.com/ahpkadota/JetTag",
     "name": "Appeal Maker",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "Makes awesome policy tags for appeals.",
     "background": {
         "service_worker": "service-worker.js"
