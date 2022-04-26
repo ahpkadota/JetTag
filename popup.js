@@ -184,7 +184,7 @@ $(document).ready(
         ati.addEventListener("change", function() {
             const sel = $('#multipleSelectExample').select2('data');
             if (document.getElementById("ati").checked) {
-                atiVal = "APPEAL TEMPLATE ISSUE\n";
+                atiVal = "Appeal Template Issue\n";
                 if (document.getElementById("flexCheckDefault").checked) {
                     document.getElementById("preview").value = atiVal + sel.map(x => x.text) + "\nREASON: \n" + sel.map(x => x.ft).join("\r\n")
                 } else {
